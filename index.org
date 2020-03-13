@@ -20,10 +20,7 @@
 
 * Overview
 
-In this chapter we'll discuss the basis of option valuation in complete markets. To help understand this method, we'll value options by the binomial method.
-
-
-
+The theory and mechanics of option valuation in complete markets can be understood through the simple one period binomial option pricing model.  Extending the valuation to more real-world settings is then just and exercise in mathematics, but the idea doesn't change.  Additionally, if you understand valuation in this simple setting, you will understand how options interact with other financial markets---why we trade a VIX index for example.  
 
 * Complete Markets
 
@@ -204,22 +201,19 @@ visNetwork(nodes, edges, width = "100%")
 ```
 #+end_comment
 
-* 
+* Option and Stock Replicating a Bond
 
 We will create a portfolio of the bond and stock which pays the same as the option in both states of the world.
 
 Replicating portfolio:
 
-sell a bond with a \$90 face value, which gives us $\frac{90}{(1 + 0.05)} = \$85.71$ today.
-buy one share of the stock for \$100.
-This portfolio costs us $\$100 - \$85.71 = \$14.29$ to create. In one year the portfolio will pay \$20 in the up-state (the stock is \$110), and \$0 in the down state (the stock is \$90).
+sell a bond with a $90 face value, which gives us $frac{90}{(1 + 0.05)} = $85.71$ today.
+buy one share of the stock for $100.
+This portfolio costs us $100 - $85.71 = $14.29$ to create. In one year the portfolio will pay $20 in the up-state (the stock is $110), and $0 in the down state (the stock is $90).
 
-The option pays \$5 in the up-state and \$0 in the down-state. The replicating portfolio we created is exactly 4 options, and therefore the cost to create the portfolio must be 4 times the cost of a single option. This gives us the option's value: $\frac{\$14.29}{4} = \$3.57$.
+The option pays $5 in the up-state and $0 in the down-state. The replicating portfolio we created is exactly 4 options, and therefore the cost to create the portfolio must be 4 times the cost of a single option. This gives us the option's value: $frac{14.29}{4} = $3.57$.
 
-If the market price is not \$3.57, can you create an arbitrage?
-
-
-* Option and Stock Replicating a Bond
+If the market price is not $3.57, can you create an arbitrage?
 
 
 #+BEGIN_EXPORT html
