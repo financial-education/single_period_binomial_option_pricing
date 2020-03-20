@@ -1,5 +1,6 @@
 #+title: Single-Period Binomial Option Pricing
 #+author: Matt Brigida, Ph.D.
+#+STARTUP: hideblocks
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 
 #+BEGIN_EXPORT html
@@ -10,6 +11,35 @@
       height: 400px;
       border: 1px solid lightgray;
     }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: #ccc;
+      }
+
+      .toolbar {
+        width: 150px;
+        height: 75px;
+        background: #ccc;
+        padding: 5px;
+      }
+
+      input[type="color"], button {
+        width: 90%;
+        margin: 0 auto;
+        display: block;
+      }
+
+      input[type="range"] {
+        width: 70%;
+      }
+
+<!---       span {
+         position: relative;
+         bottom: 5px;
+       }
+-->
   </style>
 #+END_EXPORT
 
@@ -102,24 +132,19 @@ nodes : {
 
 Could the option price be any different than the value of recreating it? No. If it were this would afford an arbitrage. If the option cost more than the cost to create it, we could sell the option, create it, and net the difference. A similar arbitrage obtains if the replication cost is above the option price.
 
-
- 
-
 * Binomial Option Valuation
 
 We start option valuation with the one-period binomial method. If you understand this, you will understand everything of importance with respect to option valuation. Beyond this, is simply applying mathematics to make the argument work in more realistic settings. The underlying economic argument is the same.
 
 Say we have the following securities:
 
-one-year zero-coupon risk-free bond with 5% yield.
-stock priced at $100 today. The stock will either be $110 or $90 in one year.
-option on the stock struck at $105 with a 1 year tenor.
-Note the option will either be worth $5 or $0 in 1 year.
-
- 
+- One-year zero-coupon risk-free bond with 5% yield.
+- Stock priced at $100 today. The stock will either be $110 or $90 in one year.
+- Option on the stock struck at $105 with a 1 year tenor. The option will either be worth $5 or $0 in 1 year.
 
 * Bond and Stock Replicating an Option
 
+First, we will use the bond and the stock to create a portfolio which pays the same as the option in both states of the world---that is we will replicate the option.
 
 #+BEGIN_EXPORT html
 <div id="bond_stock"></div>
@@ -201,20 +226,28 @@ visNetwork(nodes, edges, width = "100%")
 ```
 #+end_comment
 
-* Option and Stock Replicating a Bond
-
-We will create a portfolio of the bond and stock which pays the same as the option in both states of the world.
-
 Replicating portfolio:
 
-sell a bond with a $90 face value, which gives us $frac{90}{(1 + 0.05)} = $85.71$ today.
-buy one share of the stock for $100.
-This portfolio costs us $100 - $85.71 = $14.29$ to create. In one year the portfolio will pay $20 in the up-state (the stock is $110), and $0 in the down state (the stock is $90).
+|--------------------------------------------------+--------------------------|
+| Security                                         | Cash Flow Today          |
+|--------------------------------------------------+--------------------------|
+| Sell $90 Face Value Zero-Coupon Bond (5% coupon) | $90/(1 + 0.05) = $85.71  |
+| Buy one share of stock                           | -$100                    |
+|--------------------------------------------------+--------------------------|
+| Total                                            | -$100 + $85.71 = -$14.29 |
+|--------------------------------------------------+--------------------------|
 
-The option pays $5 in the up-state and $0 in the down-state. The replicating portfolio we created is exactly 4 options, and therefore the cost to create the portfolio must be 4 times the cost of a single option. This gives us the option's value: $frac{14.29}{4} = $3.57$.
+This portfolio costs us $100 - $85.71 = $14.29 to create. In one year the portfolio will pay $20 in the up-state (the stock is $110), and $0 in the down state (the stock is $90).  The option pays $5 in the up-state and $0 in the down-state.
+
+Thus, the replicating portfolio we created is exactly 4 options, and therefore the cost to create the portfolio must be 4 times the cost of a single option. This gives us the option's value:
+
+$$\frac{14.29}{4} = $3.57$$
 
 If the market price is not $3.57, can you create an arbitrage?
 
+* Option and Stock Replicating a Bond
+
+Now, we will create a portfolio of the option and stock which pays the same as the bond in both states of the world.
 
 #+BEGIN_EXPORT html
 <div id="call_stock"></div>
@@ -298,13 +331,14 @@ visNetwork(nodes, edges, width = "100%")
 ```
 #+end_comment
 
- 
-
-* 
-
-We will create a portfolio of the option and stock which pays the same as the bond in both states of the world.
-
 Replicating portfolio:
+
+| Security                                             | Cash Flow |
+|------------------------------------------------------+-----------|
+| Sell 1 call option with $105 strike (exp. in 1 year) | +$C_0$    |
+|                                                      |           |
+
+
 
 sell 1 one-year call option with a $105 strike (the same that we are valuing).
 buy $\frac{1}{4}$ share of the stock for $25.
@@ -319,8 +353,6 @@ $\$C - \$25 = -\$21.43 \Rightarrow \$C = \$3.57$
 This is exactly the same call option value we got using the first method.
 
 Again, if the market price is not \$3.57, can you create an arbitrage?
-
- 
 
 * 
 
@@ -377,6 +409,87 @@ visNetwork(nodes, edges, height = "1000px", width = "100%")
 ```
 #+end_comment
 
+
+* Chalkboard
+
+#+BEGIN_EXPORT html
+
+<div class="toolbar">
+      <input type="color" aria-label="select pen color">
+      <input type="range" min="2" max="50" value="30" aria-label="select pen size"><span class="output">30</span>
+      <button>Clear canvas</button>
+    </div>
+
+    <canvas class="myCanvas">
+      <p>Add suitable fallback here.</p>
+    </canvas>
+
+    <script type="text/javascript">
+
+      const canvas = document.querySelector('.myCanvas');
+      const width = canvas.width = window.innerWidth;
+      const height = canvas.height = window.innerHeight-85;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'rgb(0,0,0)';
+      ctx.fillRect(0,0,width,height);
+
+      const colorPicker = document.querySelector('input[type="color"]');
+      const sizePicker = document.querySelector('input[type="range"]');
+      const output = document.querySelector('.output');
+      const clearBtn = document.querySelector('button');
+
+      // covert degrees to radians
+      function degToRad(degrees) {
+        return degrees * Math.PI / 180;
+      };
+
+      // update sizepicker output value
+
+      sizePicker.oninput = function() {
+        output.textContent = sizePicker.value;
+      }
+
+      // store mouse pointer coordinates, and whether the button is pressed
+      let curX;
+      let curY;
+      let pressed = false;
+
+      // update mouse pointer coordinates
+      document.onmousemove = function(e) {
+        curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+        curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+      }
+
+      canvas.onmousedown = function() {
+        pressed = true;
+      };
+
+      canvas.onmouseup = function() {
+        pressed = false;
+      }
+
+      clearBtn.onclick = function() {
+        ctx.fillStyle = 'rgb(0,0,0)';
+        ctx.fillRect(0,0,width,height);
+      }
+
+      function draw() {
+        if(pressed) {
+          ctx.fillStyle = colorPicker.value;
+          ctx.beginPath();
+          ctx.arc(curX, curY-85, sizePicker.value, degToRad(0), degToRad(360), false);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+
+    </script>
+
+#+END_EXPORT
 
 * The Importance of Zeros
 
