@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-20 Fri 18:01 -->
+<!-- 2020-03-22 Sun 12:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Single-Period Binomial Option Pricing</title>
@@ -262,16 +262,21 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org3cb01d3">1. Overview</a></li>
-<li><a href="#org4abd47b">2. Complete Markets</a></li>
-<li><a href="#orgc9ea03f">3. Arbitrage</a></li>
-<li><a href="#org243d381">4. Binomial Option Valuation</a></li>
-<li><a href="#orgc2e7d5b">5. Bond and Stock Replicating an Option</a></li>
-<li><a href="#org99e8a59">6. Option and Stock Replicating a Bond</a></li>
-<li><a href="#orged52495">7. </a></li>
-<li><a href="#orgbc9a0b5">8. Chalkboard</a></li>
-<li><a href="#org0c03ef4">9. The Importance of Zeros</a></li>
-<li><a href="#orgddc4bf8">10. Credits and Collaboration</a></li>
+<li><a href="#org94929fa">1. Overview</a></li>
+<li><a href="#orgec07a6d">2. Complete Markets</a></li>
+<li><a href="#org781bc5a">3. Arbitrage</a></li>
+<li><a href="#orgc856dd7">4. Binomial Option Valuation</a></li>
+<li><a href="#orgfd18de6">5. Bond and Stock Replicating an Option</a></li>
+<li><a href="#orgeca0afa">6. Option and Stock Replicating a Bond</a></li>
+<li><a href="#org2e4643e">7. Interactive App (in R)</a></li>
+<li><a href="#orgd2280d8">8. The Importance of Zeros</a></li>
+<li><a href="#org58993ee">9. Optional YouTube Videos</a>
+<ul>
+<li><a href="#org8fd120b">9.1. Binomial Option Pricing</a></li>
+<li><a href="#orgb861b8b">9.2. Arbitrage Mispriced Options in the Binomial Model</a></li>
+</ul>
+</li>
+<li><a href="#org7af4a99">10. Chalkboard</a></li>
 </ul>
 </div>
 </div>
@@ -314,8 +319,8 @@ for the JavaScript code in this tag.
   </style>
 
 
-<div id="outline-container-org3cb01d3" class="outline-2">
-<h2 id="org3cb01d3"><span class="section-number-2">1</span> Overview</h2>
+<div id="outline-container-org94929fa" class="outline-2">
+<h2 id="org94929fa"><span class="section-number-2">1</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The theory and mechanics of option valuation in complete markets can be understood through the simple one period binomial option pricing model.  Extending the valuation to more real-world settings is then just and exercise in mathematics, but the idea doesn't change.  Additionally, if you understand valuation in this simple setting, you will understand how options interact with other financial markets&#x2014;why we trade a VIX index for example.  
@@ -323,8 +328,8 @@ The theory and mechanics of option valuation in complete markets can be understo
 </div>
 </div>
 
-<div id="outline-container-org4abd47b" class="outline-2">
-<h2 id="org4abd47b"><span class="section-number-2">2</span> Complete Markets</h2>
+<div id="outline-container-orgec07a6d" class="outline-2">
+<h2 id="orgec07a6d"><span class="section-number-2">2</span> Complete Markets</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The idea of a complete market is that we can replicate any security in the market through trading in other securities. 
@@ -404,8 +409,8 @@ nodes : {
 </div>
 
 
-<div id="outline-container-orgc9ea03f" class="outline-2">
-<h2 id="orgc9ea03f"><span class="section-number-2">3</span> Arbitrage</h2>
+<div id="outline-container-org781bc5a" class="outline-2">
+<h2 id="org781bc5a"><span class="section-number-2">3</span> Arbitrage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Could the option price be any different than the value of recreating it? No. If it were this would afford an arbitrage. If the option cost more than the cost to create it, we could sell the option, create it, and net the difference. A similar arbitrage obtains if the replication cost is above the option price.
@@ -413,8 +418,8 @@ Could the option price be any different than the value of recreating it? No. If 
 </div>
 </div>
 
-<div id="outline-container-org243d381" class="outline-2">
-<h2 id="org243d381"><span class="section-number-2">4</span> Binomial Option Valuation</h2>
+<div id="outline-container-orgc856dd7" class="outline-2">
+<h2 id="orgc856dd7"><span class="section-number-2">4</span> Binomial Option Valuation</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 We start option valuation with the one-period binomial method. If you understand this, you will understand everything of importance with respect to option valuation. Beyond this, is simply applying mathematics to make the argument work in more realistic settings. The underlying economic argument is the same.
@@ -432,8 +437,8 @@ Say we have the following securities:
 </div>
 </div>
 
-<div id="outline-container-orgc2e7d5b" class="outline-2">
-<h2 id="orgc2e7d5b"><span class="section-number-2">5</span> Bond and Stock Replicating an Option</h2>
+<div id="outline-container-orgfd18de6" class="outline-2">
+<h2 id="orgfd18de6"><span class="section-number-2">5</span> Bond and Stock Replicating an Option</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 First, we will use the bond and the stock to create a portfolio which pays the same as the option in both states of the world&#x2014;that is we will replicate the option.
@@ -557,8 +562,8 @@ If the market price is not $3.57, can you create an arbitrage?
 </div>
 </div>
 
-<div id="outline-container-org99e8a59" class="outline-2">
-<h2 id="org99e8a59"><span class="section-number-2">6</span> Option and Stock Replicating a Bond</h2>
+<div id="outline-container-orgeca0afa" class="outline-2">
+<h2 id="orgeca0afa"><span class="section-number-2">6</span> Option and Stock Replicating a Bond</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Now, we will create a portfolio of the option and stock which pays the same as the bond in both states of the world.
@@ -653,28 +658,33 @@ Replicating portfolio:
 </tr>
 
 <tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">Buy 1/4 shares of stock</td>
+<td class="org-left">-$25</td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td class="org-left">Total</td>
+<td class="org-left">\(C_0 - 25\)</td>
 </tr>
 </tbody>
 </table>
 
+<p>
+So, at time 0 we have a cash flow of \(C_0 - 25\), where \(C_0\) is the price of the call option. At time 1, the replicating portfolio will pay:
+</p>
 
+<ul class="org-ul">
+<li>up-state: \(\frac{110}{4} - 5 = 22.50\)</li>
+<li>down-state: \(\frac{90}{4} - 0 = 22.50\)</li>
+</ul>
 
 <p>
-sell 1 one-year call option with a $105 strike (the same that we are valuing).
-buy \(\frac{1}{4}\) share of the stock for $25.
-At time 0 we have a cash flow of $C - $25, where $C is the price of the call option. At time 1, the replicating portfolio will pay:
+So no matter what happens, the replicating portfolio will pay $22.50 in one year. This is a risk-free zero-coupon bond, and therefore the price today is \(\frac{22.50}{(1+0.05)} = 21.43\). So we have:
 </p>
 
 <p>
-up-state: $\$\frac{110}{4} - \$5 = \\(22.50\)
-down-state: $\$\frac{90}{4} - \$0 = \\(22.50\)
-So no matter what happens, the replicating portfolio will pay \$22.50 in one year. This is a risk-free zero-coupon bond, and therefore the price today is $\$\frac{22.50}{(1+0.05)} = \\(21.43\). So we have:
-</p>
-
-<p>
-$\$C - \$25 = -\$21.43 &rArr; \$C = \\(3.57\)
+\[C_0 - 25 = -21.43 \Rightarrow C_0 = 3.57\]
 </p>
 
 <p>
@@ -682,118 +692,111 @@ This is exactly the same call option value we got using the first method.
 </p>
 
 <p>
-Again, if the market price is not \$3.57, can you create an arbitrage?
+Again, if the market price is not $3.57, can you create an arbitrage?
 </p>
 </div>
 </div>
 
-<div id="outline-container-orged52495" class="outline-2">
-<h2 id="orged52495"><span class="section-number-2">7</span> </h2>
+<div id="outline-container-org2e4643e" class="outline-2">
+<h2 id="org2e4643e"><span class="section-number-2">7</span> Interactive App (in R)</h2>
 <div class="outline-text-2" id="text-7">
+<p>
+Need to push to s server or translate this into javascript.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-:eval">```{r message=FALSE, echo=FALSE, warning=FALSE, eval = FALSE}
+# library(fOptions)
+sidebarLayout(
+sidebarPanel(
+  sliderInput(inputId = "stockToday", label = "Stock Price Today", min = 91, max = 109, step = 1, value = 100),
+  sliderInput(inputId = "strike", label = "Strike Price", min = 91, max = 109, step = 1, value = 105),
+  sliderInput(inputId = "stockUp", label = "Stock Price in Up-State", min = 110, max = 120, step = 1, value = 110),
+  sliderInput(inputId = "stockDn", label = "Stock Price in Down-State", min = 80, max = 90, step = 1, value = 90),
+ sliderInput(inputId = "rf", label = "Risk-Free Rate", min = .01, max = .05, step = .01, value = .01)
+),
+
+mainPanel(
+    renderVisNetwork({
+      ## calculate value of option using first approach ----
+      ## we'll first try using the fOptions package 
+      ## scratch that -- use the fOptions for the binomial tree -- calculate by hand below ----
+
+  if((input$rf + 1) * input$stockToday &gt; input$stockUp) {
+      visNetwork(nodes = data.frame(id = 1, label = "Why bother with the option when you can have free money!", shape = "diamond", color = "darkred"))
+  } else {
+      ### calculating by replicating a bond
+
+      optionUp &lt;- input$stockUp - input$strike
+      optionDn &lt;- max(input$stockDn - input$strike, 0)
+
+      delta &lt;- (optionUp - optionDn) / (input$stockUp - input$stockDn)
+
+      ## replicating port: sell call and buy delta shares of stock.  At time 1 it is worth:
+      portVal1 &lt;- input$stockUp * delta - optionUp
+      portVal0 &lt;- portVal1 / (1 + input$rf)
+
+      callValue &lt;- input$stockToday * delta - portVal0
+
+
+  nodes &lt;- data.frame(id = 1:3,
+    label = c(paste0("Call Today = $", round(callValue, 2)), paste0("Call Up State = $", round(optionUp, 2)),  paste0("Call Down State = $", round(optionDn, 2))),
+  shape = c("circle", "diamond", "diamond"),
+  group = c("C", "D", "D"),
+  color = c("orange", "grey", "grey")
+)
+edges &lt;- data.frame(from = c(1,1), to = c(2,3),
+		    arrows = c("to", "to"))
+visNetwork(nodes, edges, height = "1000px", width = "100%")
+  }
+
+    })
+)
+  # }
+)
+```
+</pre>
+</div>
 </div>
 </div>
 
-
-<div id="outline-container-orgbc9a0b5" class="outline-2">
-<h2 id="orgbc9a0b5"><span class="section-number-2">8</span> Chalkboard</h2>
+<div id="outline-container-orgd2280d8" class="outline-2">
+<h2 id="orgd2280d8"><span class="section-number-2">8</span> The Importance of Zeros</h2>
 <div class="outline-text-2" id="text-8">
-
-<div class="toolbar">
-      <input type="color" aria-label="select pen color">
-      <input type="range" min="2" max="50" value="30" aria-label="select pen size"><span class="output">30</span>
-      <button>Clear canvas</button>
-    </div>
-
-    <canvas class="myCanvas">
-      <p>Add suitable fallback here.</p>
-    </canvas>
-
-    <script type="text/javascript">
-
-      const canvas = document.querySelector('.myCanvas');
-      const width = canvas.width = window.innerWidth;
-      const height = canvas.height = window.innerHeight-85;
-      const ctx = canvas.getContext('2d');
-
-      ctx.fillStyle = 'rgb(0,0,0)';
-      ctx.fillRect(0,0,width,height);
-
-      const colorPicker = document.querySelector('input[type="color"]');
-      const sizePicker = document.querySelector('input[type="range"]');
-      const output = document.querySelector('.output');
-      const clearBtn = document.querySelector('button');
-
-      // covert degrees to radians
-      function degToRad(degrees) {
-        return degrees * Math.PI / 180;
-      };
-
-      // update sizepicker output value
-
-      sizePicker.oninput = function() {
-        output.textContent = sizePicker.value;
-      }
-
-      // store mouse pointer coordinates, and whether the button is pressed
-      let curX;
-      let curY;
-      let pressed = false;
-
-      // update mouse pointer coordinates
-      document.onmousemove = function(e) {
-        curX = (window.Event) ? e.pageX : e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
-        curY = (window.Event) ? e.pageY : e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-      }
-
-      canvas.onmousedown = function() {
-        pressed = true;
-      };
-
-      canvas.onmouseup = function() {
-        pressed = false;
-      }
-
-      clearBtn.onclick = function() {
-        ctx.fillStyle = 'rgb(0,0,0)';
-        ctx.fillRect(0,0,width,height);
-      }
-
-      function draw() {
-        if(pressed) {
-          ctx.fillStyle = colorPicker.value;
-          ctx.beginPath();
-          ctx.arc(curX, curY-85, sizePicker.value, degToRad(0), degToRad(360), false);
-          ctx.fill();
-        }
-
-        requestAnimationFrame(draw);
-      }
-
-      draw();
-
-    </script>
-</div>
-</div>
-
-<div id="outline-container-org0c03ef4" class="outline-2">
-<h2 id="org0c03ef4"><span class="section-number-2">9</span> The Importance of Zeros</h2>
-<div class="outline-text-2" id="text-9">
 <p>
 Note above we used zero-coupon bonds. Zeros are important for derivative valuation because we know exactly what our return will be when we hold them (unlike with coupon bonds).
 </p>
 </div>
 </div>
 
+<div id="outline-container-org58993ee" class="outline-2">
+<h2 id="org58993ee"><span class="section-number-2">9</span> Optional YouTube Videos</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-org8fd120b" class="outline-3">
+<h3 id="org8fd120b"><span class="section-number-3">9.1</span> Binomial Option Pricing</h3>
+<div class="outline-text-3" id="text-9-1">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PZrmOh2nZus" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
 
+<div id="outline-container-orgb861b8b" class="outline-3">
+<h3 id="orgb861b8b"><span class="section-number-3">9.2</span> Arbitrage Mispriced Options in the Binomial Model</h3>
+<div class="outline-text-3" id="text-9-2">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/OgtLVfWrgZU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div>
+</div>
 
-
-<div id="outline-container-orgddc4bf8" class="outline-2">
-<h2 id="orgddc4bf8"><span class="section-number-2">10</span> Credits and Collaboration</h2>
+<div id="outline-container-org7af4a99" class="outline-2">
+<h2 id="org7af4a99"><span class="section-number-2">10</span> Chalkboard</h2>
+<div class="outline-text-2" id="text-10">
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2020-03-20 Fri 18:01</p>
+<p class="date">Created: 2020-03-22 Sun 12:34</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
