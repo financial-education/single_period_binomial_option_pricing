@@ -333,16 +333,15 @@ visNetwork(nodes, edges, width = "100%")
 
 Replicating portfolio:
 
-| Security                                             | Cash Flow |
-|------------------------------------------------------+-----------|
-| Sell 1 call option with $105 strike (exp. in 1 year) | +$C_0$    |
-|                                                      |           |
+| Security                                             | Cash Flow  |
+|------------------------------------------------------+------------|
+| Sell 1 call option with $105 strike (exp. in 1 year) | +$C_0$     |
+| Buy 1/4 shares of stock                              | -$25       |
+|------------------------------------------------------+------------|
+| Total                                                | $C_0 - 25$ |
+|------------------------------------------------------+------------|
 
-
-
-sell 1 one-year call option with a $105 strike (the same that we are valuing).
-buy $\frac{1}{4}$ share of the stock for $25.
-At time 0 we have a cash flow of $C - $25, where $C is the price of the call option. At time 1, the replicating portfolio will pay:
+So, at time 0 we have a cash flow of $C_0 - 25$, where $C_0$ is the price of the call option. At time 1, the replicating portfolio will pay:
 
 up-state: $\$\frac{110}{4} - \$5 = \$22.50$
 down-state: $\$\frac{90}{4} - \$0 = \$22.50$
