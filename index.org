@@ -138,9 +138,11 @@ We start option valuation with the one-period binomial method. If you understand
 
 Say we have the following securities:
 
-- One-year zero-coupon risk-free bond with 5% yield.
-- Stock priced at $100 today. The stock will either be $110 or $90 in one year.
-- Option on the stock struck at $105 with a 1 year tenor. The option will either be worth $5 or $0 in 1 year.
+| One-year zero-coupon risk-free bond with 5% yield.                                                               |
+| Stock priced at $100 today. The stock will either be $110 or $90 in one year.                                    |
+| Call option on the stock struck at $105 with a 1 year tenor. The option will either be worth $5 or $0 in 1 year. |
+| Put option on the stock struck at $105 with a 1 year tenor. The option will either be worth $0 or $15 in 1 year. |
+
 
 * Bond and Stock Replicating an Option
 
@@ -226,6 +228,8 @@ visNetwork(nodes, edges, width = "100%")
 ```
 #+end_comment
 
+** Call Option
+
 Replicating portfolio:
 
 |--------------------------------------------------+--------------------------|
@@ -244,6 +248,30 @@ Thus, the replicating portfolio we created is exactly 4 options, and therefore t
 $$\frac{14.29}{4} = $3.57$$
 
 If the market price is not $3.57, can you create an arbitrage?
+
+** Put Option
+
+Replicating portfolio:
+
+|--------------------------------------------------+-----------------------------|
+| Security                                         | Cash Flow Today             |
+|--------------------------------------------------+-----------------------------|
+| Buy $100 Face Value Zero-Coupon Bond (5% coupon) | -$110/(1 + 0.05) = $104.762 |
+| Sell short one share of stock                    | +$100                       |
+|--------------------------------------------------+-----------------------------|
+| Total                                            | +$100 - $104.762 = -$4.762  |
+|--------------------------------------------------+-----------------------------|
+
+This portfolio costs us $4.762 to create. In one year the portfolio will pay $0 in the up-state (the stock is $110), and $20 in the down state (the stock is $90).  The option pays $0 in the up-state and $15 in the down-state.
+
+Thus, the replicating portfolio we created is exactly $\frac{20}{15} = 1.3333$ options, and therefore the cost to create the portfolio must be 1.3333 times the cost of a single option. This gives us the option's value:
+
+$$\frac{4.762}{1.3333} = $3.5716$$
+
+Note the value of the call and put will not always be the same!!
+
+If the market price is not $3.57, can you create an arbitrage?
+
 
 * Option and Stock Replicating a Bond
 
@@ -331,12 +359,19 @@ visNetwork(nodes, edges, width = "100%")
 ```
 #+end_comment
 
+** Call Option
+
+First calculate the call option's $\Delta$. $\Delta$ is defined as the amount that the option will change if the stock increases by $1.  In this case we have:
+
+$$\Delta = \frac{C_{up} - C_{down}}{S_{up} - S_{down}} = \frac{5 - 0}{110 - 90} = \frac{5}{20} = \frac{1}{4}$$
+
 Replicating portfolio:
 
+|------------------------------------------------------+------------|
 | Security                                             | Cash Flow  |
 |------------------------------------------------------+------------|
 | Sell 1 call option with $105 strike (exp. in 1 year) | +$C_0$     |
-| Buy 1/4 shares of stock                              | -$25       |
+| Buy $\Delta$ (which is 1/4 here) shares of stock     | -$25       |
 |------------------------------------------------------+------------|
 | Total                                                | $C_0 - 25$ |
 |------------------------------------------------------+------------|
@@ -353,6 +388,36 @@ $$C_0 - 25 = -21.43 \Rightarrow C_0 = 3.57$$
 This is exactly the same call option value we got using the first method.
 
 Again, if the market price is not $3.57, can you create an arbitrage?
+
+** Put Option
+
+$$\Delta = \frac{P_{up} - P_{down}}{S_{up} - S_{down}} = \frac{0 - 15}{110 - 90} = \frac{-15}{20} = -\frac{3}{4}$$
+
+|----------------------------------------------------+-------------|
+| Security                                           | Cash Flow   |
+|----------------------------------------------------+-------------|
+| Buy 1 put option with $105 strike (exp. in 1 year) | -$P_0$      |
+| Sell $\Delta$ (here 3/4) shares of stock           | +75         |
+|----------------------------------------------------+-------------|
+| Total                                              | $-P_0 + 75$ |
+|----------------------------------------------------+-------------|
+
+So, at time 0 we have a cash flow of $75 - P_0$, where $P_0$ is the price of the put option. At time 1, the replicating portfolio will pay:
+
+- up-state: -$110(\frac{3}{4}) + 0 = -82.50$
+- down-state: -$90(\frac{3}{4}) + 15 = -82.50$
+
+So no matter what happens, the replicating portfolio will pay $82.50 in one year. This is a risk-free zero-coupon bond, and therefore the price today is $\frac{82.50}{(1+0.05)} = 78.5714$. So we have:
+
+$$75 - P_0 = 78.5714 \Rightarrow P_0 = 3.57$$
+
+Which is the same put value as we calculated above.  Again, if the put traded for a different value you could create an arbitrage with the portfolios we used in this section.
+
+* We Didn't Need Probabilities!!
+  
+Notice we didn't need the probabilities of an increase or decrease in the stock price. If we had these we could calculate the expected return in the stock, and option pricing would be much easier.
+
+
 
 * Interactive App (in R) 
 
