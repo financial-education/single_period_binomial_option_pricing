@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-23 Mon 19:56 -->
+<!-- 2021-03-30 Tue 16:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Single-Period Binomial Option Pricing</title>
@@ -180,12 +180,12 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -262,32 +262,32 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd9c50b8">1. Overview</a></li>
-<li><a href="#org1472a25">2. Complete Markets</a></li>
-<li><a href="#orgff4e7b1">3. Arbitrage</a></li>
-<li><a href="#org9d7da44">4. Binomial Option Valuation</a></li>
-<li><a href="#orgdc9682e">5. Bond and Stock Replicating an Option</a>
+<li><a href="#org396ac6f">1. Overview</a></li>
+<li><a href="#orgf2df213">2. Complete Markets</a></li>
+<li><a href="#orgd530288">3. Arbitrage</a></li>
+<li><a href="#orgbf8497e">4. Binomial Option Valuation</a></li>
+<li><a href="#org1aededa">5. Bond and Stock Replicating an Option</a>
 <ul>
-<li><a href="#org6626fa6">5.1. Call Option</a></li>
-<li><a href="#org9ca194c">5.2. Put Option</a></li>
+<li><a href="#orgbb11a43">5.1. Call Option</a></li>
+<li><a href="#orge3c4210">5.2. Put Option</a></li>
 </ul>
 </li>
-<li><a href="#orgb0f8c1b">6. Option and Stock Replicating a Bond</a>
+<li><a href="#org38d2b08">6. Option and Stock Replicating a Bond</a>
 <ul>
-<li><a href="#org8284fa0">6.1. Call Option</a></li>
-<li><a href="#orgb069a25">6.2. Put Option</a></li>
+<li><a href="#org105d9b6">6.1. Call Option</a></li>
+<li><a href="#org2852f06">6.2. Put Option</a></li>
 </ul>
 </li>
-<li><a href="#org4b70923">7. We Didn't Need Probabilities!!</a></li>
-<li><a href="#orga192d01">8. Interactive App (in R)</a></li>
-<li><a href="#org9def056">9. The Importance of Zeros</a></li>
-<li><a href="#orge8c4c47">10. Optional YouTube Videos</a>
+<li><a href="#orge66bf24">7. We Didn't Need Probabilities!!</a></li>
+<li><a href="#orgf85ec78">8. Interactive App (in R)</a></li>
+<li><a href="#org0ec773e">9. The Importance of Zeros</a></li>
+<li><a href="#orgec90103">10. Optional YouTube Videos</a>
 <ul>
-<li><a href="#orge44cf49">10.1. Binomial Option Pricing</a></li>
-<li><a href="#org9263a21">10.2. Arbitrage Mispriced Options in the Binomial Model</a></li>
+<li><a href="#org22da009">10.1. Binomial Option Pricing</a></li>
+<li><a href="#orgdd1c73b">10.2. Arbitrage Mispriced Options in the Binomial Model</a></li>
 </ul>
 </li>
-<li><a href="#org98397f5">11. Chalkboard</a></li>
+<li><a href="#org131b349">11. Chalkboard</a></li>
 </ul>
 </div>
 </div>
@@ -330,8 +330,8 @@ for the JavaScript code in this tag.
   </style>
 
 
-<div id="outline-container-orgd9c50b8" class="outline-2">
-<h2 id="orgd9c50b8"><span class="section-number-2">1</span> Overview</h2>
+<div id="outline-container-org396ac6f" class="outline-2">
+<h2 id="org396ac6f"><span class="section-number-2">1</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The theory and mechanics of option valuation in complete markets can be understood through the simple one period binomial option pricing model.  Extending the valuation to more real-world settings is then just and exercise in mathematics, but the idea doesn't change.  Additionally, if you understand valuation in this simple setting, you will understand how options interact with other financial markets&#x2014;why we trade a VIX index for example.  
@@ -339,8 +339,8 @@ The theory and mechanics of option valuation in complete markets can be understo
 </div>
 </div>
 
-<div id="outline-container-org1472a25" class="outline-2">
-<h2 id="org1472a25"><span class="section-number-2">2</span> Complete Markets</h2>
+<div id="outline-container-orgf2df213" class="outline-2">
+<h2 id="orgf2df213"><span class="section-number-2">2</span> Complete Markets</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The idea of a complete market is that we can replicate any security in the market through trading in other securities. 
@@ -420,8 +420,8 @@ nodes : {
 </div>
 
 
-<div id="outline-container-orgff4e7b1" class="outline-2">
-<h2 id="orgff4e7b1"><span class="section-number-2">3</span> Arbitrage</h2>
+<div id="outline-container-orgd530288" class="outline-2">
+<h2 id="orgd530288"><span class="section-number-2">3</span> Arbitrage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Could the option price be any different than the value of recreating it? No. If it were this would afford an arbitrage. If the option cost more than the cost to create it, we could sell the option, create it, and net the difference. A similar arbitrage obtains if the replication cost is above the option price.
@@ -429,8 +429,8 @@ Could the option price be any different than the value of recreating it? No. If 
 </div>
 </div>
 
-<div id="outline-container-org9d7da44" class="outline-2">
-<h2 id="org9d7da44"><span class="section-number-2">4</span> Binomial Option Valuation</h2>
+<div id="outline-container-orgbf8497e" class="outline-2">
+<h2 id="orgbf8497e"><span class="section-number-2">4</span> Binomial Option Valuation</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 We start option valuation with the one-period binomial method. If you understand this, you will understand everything of importance with respect to option valuation. Beyond this, is simply applying mathematics to make the argument work in more realistic settings. The underlying economic argument is the same.
@@ -468,8 +468,8 @@ Say we have the following securities:
 </div>
 
 
-<div id="outline-container-orgdc9682e" class="outline-2">
-<h2 id="orgdc9682e"><span class="section-number-2">5</span> Bond and Stock Replicating an Option</h2>
+<div id="outline-container-org1aededa" class="outline-2">
+<h2 id="org1aededa"><span class="section-number-2">5</span> Bond and Stock Replicating an Option</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 First, we will use the bond and the stock to create a portfolio which pays the same as the option in both states of the world&#x2014;that is we will replicate the option.
@@ -539,8 +539,8 @@ nodes : {
 </script>
 </div>
 
-<div id="outline-container-org6626fa6" class="outline-3">
-<h3 id="org6626fa6"><span class="section-number-3">5.1</span> Call Option</h3>
+<div id="outline-container-orgbb11a43" class="outline-3">
+<h3 id="orgbb11a43"><span class="section-number-3">5.1</span> Call Option</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Replicating portfolio:
@@ -597,8 +597,8 @@ If the market price is not $3.57, can you create an arbitrage?
 </div>
 </div>
 
-<div id="outline-container-org9ca194c" class="outline-3">
-<h3 id="org9ca194c"><span class="section-number-3">5.2</span> Put Option</h3>
+<div id="outline-container-orge3c4210" class="outline-3">
+<h3 id="orge3c4210"><span class="section-number-3">5.2</span> Put Option</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Replicating portfolio:
@@ -661,8 +661,8 @@ If the market price is not $3.57, can you create an arbitrage?
 </div>
 
 
-<div id="outline-container-orgb0f8c1b" class="outline-2">
-<h2 id="orgb0f8c1b"><span class="section-number-2">6</span> Option and Stock Replicating a Bond</h2>
+<div id="outline-container-org38d2b08" class="outline-2">
+<h2 id="org38d2b08"><span class="section-number-2">6</span> Option and Stock Replicating a Bond</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Now, we will create a portfolio of the option and stock which pays the same as the bond in both states of the world.
@@ -732,8 +732,8 @@ nodes : {
 </script>
 </div>
 
-<div id="outline-container-org8284fa0" class="outline-3">
-<h3 id="org8284fa0"><span class="section-number-3">6.1</span> Call Option</h3>
+<div id="outline-container-org105d9b6" class="outline-3">
+<h3 id="org105d9b6"><span class="section-number-3">6.1</span> Call Option</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 First calculate the call option's \(\Delta\). \(\Delta\) is defined as the amount that the option will change if the stock increases by $1.  In this case we have:
@@ -807,8 +807,8 @@ Again, if the market price is not $3.57, can you create an arbitrage?
 </div>
 </div>
 
-<div id="outline-container-orgb069a25" class="outline-3">
-<h3 id="orgb069a25"><span class="section-number-3">6.2</span> Put Option</h3>
+<div id="outline-container-org2852f06" class="outline-3">
+<h3 id="org2852f06"><span class="section-number-3">6.2</span> Put Option</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 \[\Delta = \frac{P_{up} - P_{down}}{S_{up} - S_{down}} = \frac{0 - 15}{110 - 90} = \frac{-15}{20} = -\frac{3}{4}\]
@@ -871,8 +871,8 @@ Which is the same put value as we calculated above.  Again, if the put traded fo
 </div>
 </div>
 
-<div id="outline-container-org4b70923" class="outline-2">
-<h2 id="org4b70923"><span class="section-number-2">7</span> We Didn't Need Probabilities!!</h2>
+<div id="outline-container-orge66bf24" class="outline-2">
+<h2 id="orge66bf24"><span class="section-number-2">7</span> We Didn't Need Probabilities!!</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Notice we didn't need the probabilities of an increase or decrease in the stock price. If we had these we could calculate the expected return in the stock, and option pricing would be much easier.
@@ -882,8 +882,8 @@ Notice we didn't need the probabilities of an increase or decrease in the stock 
 
 
 
-<div id="outline-container-orga192d01" class="outline-2">
-<h2 id="orga192d01"><span class="section-number-2">8</span> Interactive App (in R)</h2>
+<div id="outline-container-orgf85ec78" class="outline-2">
+<h2 id="orgf85ec78"><span class="section-number-2">8</span> Interactive App (in R)</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Need to push to s server or translate this into javascript.
@@ -945,8 +945,8 @@ visNetwork(nodes, edges, height = "1000px", width = "100%")
 </div>
 </div>
 
-<div id="outline-container-org9def056" class="outline-2">
-<h2 id="org9def056"><span class="section-number-2">9</span> The Importance of Zeros</h2>
+<div id="outline-container-org0ec773e" class="outline-2">
+<h2 id="org0ec773e"><span class="section-number-2">9</span> The Importance of Zeros</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Note above we used zero-coupon bonds. Zeros are important for derivative valuation because we know exactly what our return will be when we hold them (unlike with coupon bonds).
@@ -954,34 +954,34 @@ Note above we used zero-coupon bonds. Zeros are important for derivative valuati
 </div>
 </div>
 
-<div id="outline-container-orge8c4c47" class="outline-2">
-<h2 id="orge8c4c47"><span class="section-number-2">10</span> Optional YouTube Videos</h2>
+<div id="outline-container-orgec90103" class="outline-2">
+<h2 id="orgec90103"><span class="section-number-2">10</span> Optional YouTube Videos</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-orge44cf49" class="outline-3">
-<h3 id="orge44cf49"><span class="section-number-3">10.1</span> Binomial Option Pricing</h3>
+<div id="outline-container-org22da009" class="outline-3">
+<h3 id="org22da009"><span class="section-number-3">10.1</span> Binomial Option Pricing</h3>
 <div class="outline-text-3" id="text-10-1">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PZrmOh2nZus" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 
-<div id="outline-container-org9263a21" class="outline-3">
-<h3 id="org9263a21"><span class="section-number-3">10.2</span> Arbitrage Mispriced Options in the Binomial Model</h3>
+<div id="outline-container-orgdd1c73b" class="outline-3">
+<h3 id="orgdd1c73b"><span class="section-number-3">10.2</span> Arbitrage Mispriced Options in the Binomial Model</h3>
 <div class="outline-text-3" id="text-10-2">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OgtLVfWrgZU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org98397f5" class="outline-2">
-<h2 id="org98397f5"><span class="section-number-2">11</span> Chalkboard</h2>
+<div id="outline-container-org131b349" class="outline-2">
+<h2 id="org131b349"><span class="section-number-2">11</span> Chalkboard</h2>
 <div class="outline-text-2" id="text-11">
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2020-03-23 Mon 19:56</p>
+<p class="date">Created: 2021-03-30 Tue 16:21</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
