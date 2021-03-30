@@ -575,5 +575,113 @@ Note above we used zero-coupon bonds. Zeros are important for derivative valuati
     </script>
 
 #+END_EXPORT
+#+end_comment
 
+#+begin_comment
+#+begin_export html
+<html>
+    <script type="text/javascript">
+// from here: https://stackoverflow.com/questions/2368784/draw-on-html5-canvas-using-a-mouse
+// create canvas element and append it to document body
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+// some hotfixes... ( ≖_≖)
+document.body.style.margin = 0;
+canvas.style.position = 'fixed';
+
+// get canvas 2D context and set him correct size
+var ctx = canvas.getContext('2d');
+resize();
+
+// last known position
+var pos = { x: 0, y: 0 };
+
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+
+// new position from mouse event
+function setPosition(e) {
+  pos.x = e.clientX;
+  pos.y = e.clientY;
+}
+
+// resize canvas
+function resize() {
+  ctx.canvas.width = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+}
+
+function draw(e) {
+  // mouse left button must be pressed
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 5;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#c0392b';
+
+  ctx.moveTo(pos.x, pos.y); // from
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); // to
+
+  ctx.stroke(); // draw it!
+}
+  </script>
+<style>
+#container{
+    margin-top: 5px;
+    width: 96%;
+    margin: auto;
+    background-color: blue;
+    height: 300px;
+}
+
+#viewer{
+    width: 40%;
+    background-color: red;
+    height: 100%;
+    position:relative;
+}
+
+#button{
+    height: 40px;
+    width: 40px;
+    background-color: green;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+canvas{
+    border: 3px solid black; 
+    width: 100%;
+    height: 100%;
+}
+</style>
+<div id="container">
+    <div id="viewer">
+    <canvas id="canvas" width="400" height="400" style="position:absolute;bottom:10%;left:10%;border:2px solid;"></canvas>
+    <input type="button" value="Clear" class="canvas-clear" />
+</div>
+</div>
+    <body onload="init()">
+        <canvas id="can" width="400" height="400" style="position:absolute;bottom:10%;left:10%;border:2px solid;"></canvas>
+        <div style="position:absolute;bottom:12%;left:43%;">Choose Color</div>
+        <div style="position:absolute;bottom:15%;left:45%;width:10px;height:10px;background:green;" id="green" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:15%;left:46%;width:10px;height:10px;background:blue;" id="blue" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:15%;left:47%;width:10px;height:10px;background:red;" id="red" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:17%;left:45%;width:10px;height:10px;background:yellow;" id="yellow" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:17%;left:46%;width:10px;height:10px;background:orange;" id="orange" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:17%;left:47%;width:10px;height:10px;background:black;" id="black" onclick="color(this)"></div>
+        <div style="position:absolute;bottom:20%;left:43%;">Eraser</div>
+        <div style="position:absolute;bottom:22%;left:45%;width:15px;height:15px;background:white;border:2px solid;" id="white" onclick="color(this)"></div>
+        <img id="canvasimg" style="position:absolute;bottom:10%;left:52%;" style="display:none;">
+        <input type="button" value="save" id="btn" size="30" onclick="save()" style="position:absolute;bottom:55%;left:10%;">
+        <input type="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;bottom:55%;left:15%;">
+    </html>
+#+end_export
 #+end_comment
