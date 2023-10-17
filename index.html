@@ -3,291 +3,84 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-30 Tue 16:44 -->
+<!-- 2023-10-17 Tue 14:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Single-Period Binomial Option Pricing</title>
-<meta name="generator" content="Org mode" />
 <meta name="author" content="Matt Brigida, Ph.D." />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">Single-Period Binomial Option Pricing</h1>
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgadb90ef">1. Overview</a></li>
-<li><a href="#org62fa9a5">2. Complete Markets</a></li>
-<li><a href="#org0caa18c">3. Arbitrage</a></li>
-<li><a href="#org47e38cb">4. Binomial Option Valuation</a></li>
-<li><a href="#org085e1c1">5. Bond and Stock Replicating an Option</a>
+<li><a href="#orgad69417">1. Overview</a></li>
+<li><a href="#org73d0fe7">2. Complete Markets</a></li>
+<li><a href="#org5dc7bbe">3. Arbitrage</a></li>
+<li><a href="#orgb0450c7">4. Binomial Option Valuation</a></li>
+<li><a href="#org09ce6fd">5. Bond and Stock Replicating an Option</a>
 <ul>
-<li><a href="#org04d4c9e">5.1. Call Option</a></li>
-<li><a href="#org451c5d6">5.2. Put Option</a></li>
+<li><a href="#org2bf570a">5.1. Call Option</a></li>
+<li><a href="#org4facb06">5.2. Put Option</a></li>
 </ul>
 </li>
-<li><a href="#org9042c92">6. Option and Stock Replicating a Bond</a>
+<li><a href="#orgb1f59ce">6. Option and Stock Replicating a Bond</a>
 <ul>
-<li><a href="#org3c47e7f">6.1. Call Option</a></li>
-<li><a href="#org53fa1af">6.2. Put Option</a></li>
+<li><a href="#orgdb99555">6.1. Call Option</a></li>
+<li><a href="#orga77c2d1">6.2. Put Option</a></li>
 </ul>
 </li>
-<li><a href="#org537398b">7. We Didn't Need Probabilities!!</a></li>
-<li><a href="#org8b2ef9e">8. Interactive App (in R)</a></li>
-<li><a href="#orgf8022c2">9. The Importance of Zeros</a></li>
-<li><a href="#orga6b947f">10. Optional YouTube Videos</a>
+<li><a href="#orgeb0eeb8">7. We Didn't Need Probabilities!!</a></li>
+<li><a href="#org98a1ddc">8. Interactive App (in R)</a></li>
+<li><a href="#org392cf21">9. The Importance of Zeros</a></li>
+<li><a href="#orga5e578e">10. Optional YouTube Videos</a>
 <ul>
-<li><a href="#org38df1d3">10.1. Binomial Option Pricing</a></li>
-<li><a href="#org944ebc1">10.2. Arbitrage Mispriced Options in the Binomial Model</a></li>
+<li><a href="#org9ec6f15">10.1. Binomial Option Pricing</a></li>
+<li><a href="#org7a63554">10.2. Arbitrage Mispriced Options in the Binomial Model</a></li>
 </ul>
 </li>
-<li><a href="#orgc9f8d4b">11. Chalkboard</a></li>
+<li><a href="#org97db031">11. Chalkboard</a></li>
 </ul>
 </div>
 </div>
@@ -330,8 +123,8 @@ for the JavaScript code in this tag.
   </style>
 
 
-<div id="outline-container-orgadb90ef" class="outline-2">
-<h2 id="orgadb90ef"><span class="section-number-2">1</span> Overview</h2>
+<div id="outline-container-orgad69417" class="outline-2">
+<h2 id="orgad69417"><span class="section-number-2">1.</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The theory and mechanics of option valuation in complete markets can be understood through the simple one period binomial option pricing model.  Extending the valuation to more real-world settings is then just and exercise in mathematics, but the idea doesn't change.  Additionally, if you understand valuation in this simple setting, you will understand how options interact with other financial markets&#x2014;why we trade a VIX index for example.  
@@ -339,8 +132,8 @@ The theory and mechanics of option valuation in complete markets can be understo
 </div>
 </div>
 
-<div id="outline-container-org62fa9a5" class="outline-2">
-<h2 id="org62fa9a5"><span class="section-number-2">2</span> Complete Markets</h2>
+<div id="outline-container-org73d0fe7" class="outline-2">
+<h2 id="org73d0fe7"><span class="section-number-2">2.</span> Complete Markets</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 The idea of a complete market is that we can replicate any security in the market through trading in other securities. 
@@ -420,8 +213,8 @@ nodes : {
 </div>
 
 
-<div id="outline-container-org0caa18c" class="outline-2">
-<h2 id="org0caa18c"><span class="section-number-2">3</span> Arbitrage</h2>
+<div id="outline-container-org5dc7bbe" class="outline-2">
+<h2 id="org5dc7bbe"><span class="section-number-2">3.</span> Arbitrage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Could the option price be any different than the value of recreating it? No. If it were this would afford an arbitrage. If the option cost more than the cost to create it, we could sell the option, create it, and net the difference. A similar arbitrage obtains if the replication cost is above the option price.
@@ -429,8 +222,8 @@ Could the option price be any different than the value of recreating it? No. If 
 </div>
 </div>
 
-<div id="outline-container-org47e38cb" class="outline-2">
-<h2 id="org47e38cb"><span class="section-number-2">4</span> Binomial Option Valuation</h2>
+<div id="outline-container-orgb0450c7" class="outline-2">
+<h2 id="orgb0450c7"><span class="section-number-2">4.</span> Binomial Option Valuation</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 We start option valuation with the one-period binomial method. If you understand this, you will understand everything of importance with respect to option valuation. Beyond this, is simply applying mathematics to make the argument work in more realistic settings. The underlying economic argument is the same.
@@ -468,8 +261,8 @@ Say we have the following securities:
 </div>
 
 
-<div id="outline-container-org085e1c1" class="outline-2">
-<h2 id="org085e1c1"><span class="section-number-2">5</span> Bond and Stock Replicating an Option</h2>
+<div id="outline-container-org09ce6fd" class="outline-2">
+<h2 id="org09ce6fd"><span class="section-number-2">5.</span> Bond and Stock Replicating an Option</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 First, we will use the bond and the stock to create a portfolio which pays the same as the option in both states of the world&#x2014;that is we will replicate the option.
@@ -539,8 +332,8 @@ nodes : {
 </script>
 </div>
 
-<div id="outline-container-org04d4c9e" class="outline-3">
-<h3 id="org04d4c9e"><span class="section-number-3">5.1</span> Call Option</h3>
+<div id="outline-container-org2bf570a" class="outline-3">
+<h3 id="org2bf570a"><span class="section-number-3">5.1.</span> Call Option</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Replicating portfolio:
@@ -597,8 +390,8 @@ If the market price is not $3.57, can you create an arbitrage?
 </div>
 </div>
 
-<div id="outline-container-org451c5d6" class="outline-3">
-<h3 id="org451c5d6"><span class="section-number-3">5.2</span> Put Option</h3>
+<div id="outline-container-org4facb06" class="outline-3">
+<h3 id="org4facb06"><span class="section-number-3">5.2.</span> Put Option</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Replicating portfolio:
@@ -661,8 +454,8 @@ If the market price is not $3.57, can you create an arbitrage?
 </div>
 
 
-<div id="outline-container-org9042c92" class="outline-2">
-<h2 id="org9042c92"><span class="section-number-2">6</span> Option and Stock Replicating a Bond</h2>
+<div id="outline-container-orgb1f59ce" class="outline-2">
+<h2 id="orgb1f59ce"><span class="section-number-2">6.</span> Option and Stock Replicating a Bond</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 Now, we will create a portfolio of the option and stock which pays the same as the bond in both states of the world.
@@ -732,8 +525,8 @@ nodes : {
 </script>
 </div>
 
-<div id="outline-container-org3c47e7f" class="outline-3">
-<h3 id="org3c47e7f"><span class="section-number-3">6.1</span> Call Option</h3>
+<div id="outline-container-orgdb99555" class="outline-3">
+<h3 id="orgdb99555"><span class="section-number-3">6.1.</span> Call Option</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 First calculate the call option's \(\Delta\). \(\Delta\) is defined as the amount that the option will change if the stock increases by $1.  In this case we have:
@@ -807,8 +600,8 @@ Again, if the market price is not $3.57, can you create an arbitrage?
 </div>
 </div>
 
-<div id="outline-container-org53fa1af" class="outline-3">
-<h3 id="org53fa1af"><span class="section-number-3">6.2</span> Put Option</h3>
+<div id="outline-container-orga77c2d1" class="outline-3">
+<h3 id="orga77c2d1"><span class="section-number-3">6.2.</span> Put Option</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 \[\Delta = \frac{P_{up} - P_{down}}{S_{up} - S_{down}} = \frac{0 - 15}{110 - 90} = \frac{-15}{20} = -\frac{3}{4}\]
@@ -871,8 +664,8 @@ Which is the same put value as we calculated above.  Again, if the put traded fo
 </div>
 </div>
 
-<div id="outline-container-org537398b" class="outline-2">
-<h2 id="org537398b"><span class="section-number-2">7</span> We Didn't Need Probabilities!!</h2>
+<div id="outline-container-orgeb0eeb8" class="outline-2">
+<h2 id="orgeb0eeb8"><span class="section-number-2">7.</span> We Didn't Need Probabilities!!</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 Notice we didn't need the probabilities of an increase or decrease in the stock price. If we had these we could calculate the expected return in the stock, and option pricing would be much easier.
@@ -882,8 +675,8 @@ Notice we didn't need the probabilities of an increase or decrease in the stock 
 
 
 
-<div id="outline-container-org8b2ef9e" class="outline-2">
-<h2 id="org8b2ef9e"><span class="section-number-2">8</span> Interactive App (in R)</h2>
+<div id="outline-container-org98a1ddc" class="outline-2">
+<h2 id="org98a1ddc"><span class="section-number-2">8.</span> Interactive App (in R)</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Need to push to s server or translate this into javascript.
@@ -931,7 +724,7 @@ mainPanel(
   color = c("orange", "grey", "grey")
 )
 edges &lt;- data.frame(from = c(1,1), to = c(2,3),
-		    arrows = c("to", "to"))
+                    arrows = c("to", "to"))
 visNetwork(nodes, edges, height = "1000px", width = "100%")
   }
 
@@ -945,8 +738,8 @@ visNetwork(nodes, edges, height = "1000px", width = "100%")
 </div>
 </div>
 
-<div id="outline-container-orgf8022c2" class="outline-2">
-<h2 id="orgf8022c2"><span class="section-number-2">9</span> The Importance of Zeros</h2>
+<div id="outline-container-org392cf21" class="outline-2">
+<h2 id="org392cf21"><span class="section-number-2">9.</span> The Importance of Zeros</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Note above we used zero-coupon bonds. Zeros are important for derivative valuation because we know exactly what our return will be when we hold them (unlike with coupon bonds).
@@ -954,35 +747,35 @@ Note above we used zero-coupon bonds. Zeros are important for derivative valuati
 </div>
 </div>
 
-<div id="outline-container-orga6b947f" class="outline-2">
-<h2 id="orga6b947f"><span class="section-number-2">10</span> Optional YouTube Videos</h2>
+<div id="outline-container-orga5e578e" class="outline-2">
+<h2 id="orga5e578e"><span class="section-number-2">10.</span> Optional YouTube Videos</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-org38df1d3" class="outline-3">
-<h3 id="org38df1d3"><span class="section-number-3">10.1</span> Binomial Option Pricing</h3>
+<div id="outline-container-org9ec6f15" class="outline-3">
+<h3 id="org9ec6f15"><span class="section-number-3">10.1.</span> Binomial Option Pricing</h3>
 <div class="outline-text-3" id="text-10-1">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/PZrmOh2nZus" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 
-<div id="outline-container-org944ebc1" class="outline-3">
-<h3 id="org944ebc1"><span class="section-number-3">10.2</span> Arbitrage Mispriced Options in the Binomial Model</h3>
+<div id="outline-container-org7a63554" class="outline-3">
+<h3 id="org7a63554"><span class="section-number-3">10.2.</span> Arbitrage Mispriced Options in the Binomial Model</h3>
 <div class="outline-text-3" id="text-10-2">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OgtLVfWrgZU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc9f8d4b" class="outline-2">
-<h2 id="orgc9f8d4b"><span class="section-number-2">11</span> Chalkboard</h2>
+<div id="outline-container-org97db031" class="outline-2">
+<h2 id="org97db031"><span class="section-number-2">11.</span> Chalkboard</h2>
 <div class="outline-text-2" id="text-11">
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2021-03-30 Tue 16:44</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p class="date">Created: 2023-10-17 Tue 14:53</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
